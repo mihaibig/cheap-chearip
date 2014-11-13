@@ -1,14 +1,22 @@
 <!doctype html>
 <html>
   <head>
-    <title>Socket.IO chat</title>
+    <title>cip-cirip cutomer</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
   <body>
-    <ul id="messages"></ul>
-    <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
-    </form>
+    <div id="login">
+      <form action="">
+        <label>Username: </label>
+        <input autocomplete="off" /><button>Talk with support!</button>
+      </form>
+    </div>
+    <div id="chat">
+      <ul id="messages"></ul>
+      <form action="">
+        <input autocomplete="off" /><button>Send</button>
+      </form>
+    </div>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script type="text/javascript" src="customer.js"></script>

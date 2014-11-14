@@ -1,10 +1,13 @@
-var app = require('express')();
+var express = require('express');
+var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 app.get('/', function(req, res){
-  res.sendfile(__dirname + '/index.html');
+  res.sendfile(__dirname + '/client/customer.html');
 });
+
+app.use(express.static(__dirname + '/client'));
 
 io.on('connection', function(socket){
   socket.on('chat message', function(msg){

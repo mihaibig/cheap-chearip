@@ -9,10 +9,33 @@ app.get('/', function(req, res){
 
 app.use(express.static(__dirname + '/client'));
 
-io.on('connection', function(socket){
-  socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
-  });
+var supportSocket
+
+var customerSockets = {}
+
+io.of('/support').on('connection', function(socket){
+	if(!supportSocket){
+		supportSocket = socket;
+		socket.on('message', function(msg){
+			if(customerSockets[msg.to])
+				customerSockets[msg.to].emit('message', msg);
+		});
+	}
+	else{
+		return
+	}
+});
+
+io.of('/customer').on('connection', function(socket){
+	socket.on('i am', function(name){
+    	if(supportSocket){
+			supportSocket.emit('new customer', {id: socket.id, name: name});
+			customerSockets[socket.id] = socket;
+			socket.on('message', function(msg){
+				supportSocket.emit('message', {from: name, content: msg});
+			});
+		}
+  	});
 });
 
 http.listen(3000, function(){

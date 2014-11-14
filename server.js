@@ -9,7 +9,7 @@ app.get('/', function(req, res){
 
 app.use(express.static(__dirname + '/client'));
 
-var supportSocket
+var supportSocket = null
 
 var customerSockets = {}
 
@@ -18,24 +18,32 @@ io.of('/support').on('connection', function(socket){
 		supportSocket = socket;
 		socket.on('message', function(msg){
 			if(customerSockets[msg.to])
-				customerSockets[msg.to].emit('message', msg);
+				customerSockets[msg.to].emit('message', msg.content);
+		});
+		socket.on('disconnect', function () {
+			supportSocket = null;
 		});
 	}
-	else{
-		return
+	else {
+		socket.disconnect();
 	}
 });
 
 io.of('/customer').on('connection', function(socket){
-	socket.on('i am', function(name){
-    	if(supportSocket){
+	if(supportSocket){
+		socket.on('i am', function(name){
 			supportSocket.emit('new customer', {id: socket.id, name: name});
 			customerSockets[socket.id] = socket;
 			socket.on('message', function(msg){
-				supportSocket.emit('message', {from: name, content: msg});
+				supportSocket.emit('message', {from: socket.id, content: msg});
 			});
-		}
-  	});
+			socket.on('disconnect', function () {
+				delete customerSockets[socket.id];
+			});
+		});
+	} else {
+		socket.disconnect();
+	}
 });
 
 http.listen(3000, function(){

@@ -2,15 +2,34 @@
 <html>
   <head>
     <title>Socket.IO chat</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="support.css">
   </head>
   <body>
-    <ul id="messages"></ul>
-    <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
-    </form>
-    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    
+    <div role="tabpanel">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs customer-tabs" role="tablist">
+          
+          <!-- <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li> -->
+
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content customer-panes">
+          <!-- <div role="tabpanel" class="tab-pane active" id="home">...</div> -->
+
+        </div>
+  </div>
+
+    
+
+
+    <!-- js -->
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    
     <script src="support.js"></script>
   </body>
 </html>
